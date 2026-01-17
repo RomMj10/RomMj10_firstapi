@@ -12,21 +12,34 @@ const getStudentById = async (id) => {
 };
 
 const addStudent = async (student) => {
-    const { firstname, lastname, age, course_id, department_id } = student;
-    const [result] = await db.query('INSERT INTO tbl_student (firstname, lastname, age, course_id, department_id) VALUES (?, ?, ?, ?, ?)', 
-        [firstname, lastname, age, course_id, department_id]);
+    const { firstname, lastname, gender, age, course_id, department_id } = student;
+    const [result] = await db.query('INSERT INTO tbl_student (firstname, lastname, gender, age, course_id, department_id) VALUES (?, ?, ?, ?, ?, ?)', 
+        [firstname, lastname, gender, age, course_id, department_id]);
     return result.insertId;
 };
 
-const updateStudent = async (id, { firstname, lastname, age, course_id, department_id }) => {
-    const [result] = await db.query('UPDATE tbl_student SET firstname = ?, lastname = ?, age = ?, course_id = ?, department_id = ? WHERE id = ?', 
-        [firstname, lastname, age, course_id, department_id, id]);
+const updateStudent = async (id, { firstname, lastname, gender,age, course_id, department_id }) => {
+    const [result] = await db.query('UPDATE tbl_student SET firstname = ?, lastname = ?, gender= ?, age = ?, course_id = ?, department_id = ? WHERE id = ?', 
+        [firstname, lastname, gender, age, course_id, department_id, id]);
     return result;
 };
+
+const updateStudentStatus = async (id, status) => {
+    const [result] = await db.query('UPDATE tbl_student SET status = ? WHERE id = ?',
+        [status, id]);
+    return result;
+}
+
+const removeStudent = async (id) => {
+    const [result] = await db.query('DELETE FROM tbl_student WHERE id = ?', [id]);
+    return result;
+}
 
 module.exports = {
     getAllStudents,
     getStudentById,
     addStudent,
-    updateStudent
+    updateStudent,
+    updateStudentStatus,
+    removeStudent
 };

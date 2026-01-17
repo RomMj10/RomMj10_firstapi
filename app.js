@@ -8,7 +8,7 @@ app.use(cors(`https://localhost:3000`));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Simple API for student management system');
 });
 
 app.use('/api/students', studentRoutes);
